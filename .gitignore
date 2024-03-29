@@ -1,0 +1,9 @@
+node_modules/
+
+hidden-variables.js
+package-lock.json
+populatedb.js
+
+# Temp
+views/
+public/
