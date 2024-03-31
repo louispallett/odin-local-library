@@ -1,8 +1,9 @@
 node_modules/
 
-hidden-variables.js
+connection.js
 package-lock.json
 populatedb.js
+*.txt
 
 # Temp
 views/

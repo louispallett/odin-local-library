@@ -1,3 +1,4 @@
+const { DateTime } = require("luxon");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -11,14 +12,36 @@ const AuthorSchema = new Schema(
     }
 );
 
+// This allows us to access the property 'name' even though it isn't on the database - we effectively
+// create it here
 AuthorSchema.virtual("name").get(function () {
     let fullname = "";
-    if (this.full_name && this.last_name) fullname = `${this.family_name}, ${this.first_name}`;
+    if (this.first_name && this.family_name) {
+        fullname = `${this.family_name}, ${this.first_name}`;
+    }
     return fullname;
 });
 
 AuthorSchema.virtual("url").get(function() {
-    return `catalog/author/${this._id}`;
+    return `/catalog/author/${this._id}`;
+});
+
+AuthorSchema.virtual("birth_date_formatted").get(function() {
+    return this.date_of_birth 
+        ?  DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED)
+        : "<Author birth unavailable>";
+});
+
+AuthorSchema.virtual("death_date_formatted").get(function() {
+    return this.date_of_death
+        ? DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED)
+        : "";
+});
+
+AuthorSchema.virtual("lifespan").get(function() {
+    return this.date_of_birth && this.date_of_death 
+    ? `[Lifespan: ${this.date_of_death.getFullYear() - this.date_of_birth.getFullYear()} years]`
+    : "";
 });
 
 module.exports = mongoose.model("Author", AuthorSchema);
