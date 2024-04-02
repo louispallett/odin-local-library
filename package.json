@@ -2,7 +2,7 @@
   "name": "local-library",
   "version": "0.0.0",
   "engines": {
-    "node": ">=21.7.1"
+    "node": ">=16.14.2"
   },
   "private": true,
   "scripts": {
