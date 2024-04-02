@@ -1,6 +1,7 @@
 connection.js
 populatedb.js
 *.txt
+*.ico
 
 # Logs
 logs
